@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>16. 單檔模組化 | Vue.js 學習筆記</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,user-scaleble=0,initial-scale=1.0,maximum-scale=1.0">
+    
+    <link rel="preload" href="/vuepress-blog/assets/css/0.styles.5ca8b2cc.css" as="style"><link rel="preload" href="/vuepress-blog/assets/js/app.e552d1dc.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/2.b5968420.js" as="script"><link rel="preload" href="/vuepress-blog/assets/js/24.3b40ec03.js" as="script"><link rel="prefetch" href="/vuepress-blog/assets/js/10.8c6f1f8d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/11.ccb28b7f.js"><link rel="prefetch" href="/vuepress-blog/assets/js/12.861842a4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/13.9b229a5e.js"><link rel="prefetch" href="/vuepress-blog/assets/js/14.eb10e0d8.js"><link rel="prefetch" href="/vuepress-blog/assets/js/15.006eaec4.js"><link rel="prefetch" href="/vuepress-blog/assets/js/16.9ed936ea.js"><link rel="prefetch" href="/vuepress-blog/assets/js/17.fbf0b13a.js"><link rel="prefetch" href="/vuepress-blog/assets/js/18.6b095c66.js"><link rel="prefetch" href="/vuepress-blog/assets/js/19.e4204355.js"><link rel="prefetch" href="/vuepress-blog/assets/js/20.e429cdb7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/21.b1af06cf.js"><link rel="prefetch" href="/vuepress-blog/assets/js/22.f680a63d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/23.c2b5cb83.js"><link rel="prefetch" href="/vuepress-blog/assets/js/25.0edd488d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/26.4506e671.js"><link rel="prefetch" href="/vuepress-blog/assets/js/27.97d6bbf2.js"><link rel="prefetch" href="/vuepress-blog/assets/js/28.7e996d00.js"><link rel="prefetch" href="/vuepress-blog/assets/js/29.54f35c5d.js"><link rel="prefetch" href="/vuepress-blog/assets/js/3.dc0d811c.js"><link rel="prefetch" href="/vuepress-blog/assets/js/30.684c9c63.js"><link rel="prefetch" href="/vuepress-blog/assets/js/31.de0aa471.js"><link rel="prefetch" href="/vuepress-blog/assets/js/32.760d1034.js"><link rel="prefetch" href="/vuepress-blog/assets/js/33.de1eafca.js"><link rel="prefetch" href="/vuepress-blog/assets/js/34.bd299fc7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/35.50262cda.js"><link rel="prefetch" href="/vuepress-blog/assets/js/36.4be54370.js"><link rel="prefetch" href="/vuepress-blog/assets/js/37.e59fb048.js"><link rel="prefetch" href="/vuepress-blog/assets/js/38.0511daa0.js"><link rel="prefetch" href="/vuepress-blog/assets/js/4.39a65fa7.js"><link rel="prefetch" href="/vuepress-blog/assets/js/5.188a4bcf.js"><link rel="prefetch" href="/vuepress-blog/assets/js/6.65c00175.js"><link rel="prefetch" href="/vuepress-blog/assets/js/7.c23ce467.js"><link rel="prefetch" href="/vuepress-blog/assets/js/8.1d757f08.js"><link rel="prefetch" href="/vuepress-blog/assets/js/9.63b231c7.js">
+    <link rel="stylesheet" href="/vuepress-blog/assets/css/0.styles.5ca8b2cc.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vuepress-blog/" class="home-link router-link-active"><!----> <span class="site-name">Vue.js 學習筆記</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="https://github.com/as60160" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://codepen.io/as60160" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Codepen
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://medium.com/jane-lin" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Medium
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="https://github.com/as60160" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://codepen.io/as60160" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Codepen
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://medium.com/jane-lin" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Medium
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><a href="/vuepress-blog/alex/" class="sidebar-heading clickable router-link-active open"><span>Vue.js 手牽手</span> <span class="arrow down"></span></a> <ul class="sidebar-links sidebar-group-items"><li><a href="/vuepress-blog/alex/" aria-current="page" class="sidebar-link">00. 影片資訊</a></li><li><a href="/vuepress-blog/alex/day01.html" class="sidebar-link">01. 介紹及相關說明</a></li><li><a href="/vuepress-blog/alex/day02.html" class="sidebar-link">02. VS Code 與套裝工具組</a></li><li><a href="/vuepress-blog/alex/day03.html" class="sidebar-link">03. jQuery 與 vue 畫面處理</a></li><li><a href="/vuepress-blog/alex/day04.html" class="sidebar-link">04. 事件綁定</a></li><li><a href="/vuepress-blog/alex/day05.html" class="sidebar-link">05. 雙向處理表單資料 (v-model)</a></li><li><a href="/vuepress-blog/alex/day06.html" class="sidebar-link">06. 使用者輸入與列表呈現 (v-for)</a></li><li><a href="/vuepress-blog/alex/day07.html" class="sidebar-link">07. 資料篩選</a></li><li><a href="/vuepress-blog/alex/day08.html" class="sidebar-link">08. 互動式資料表單</a></li><li><a href="/vuepress-blog/alex/day09.html" class="sidebar-link">09. CSS 與 jQuery 動畫 (transition)</a></li><li><a href="/vuepress-blog/alex/day10.html" class="sidebar-link">10. 資料觀測與設定</a></li><li><a href="/vuepress-blog/alex/day11.html" class="sidebar-link">11. 生命週期</a></li><li><a href="/vuepress-blog/alex/day12.html" class="sidebar-link">12. 通訊錄 手作 API 1</a></li><li><a href="/vuepress-blog/alex/day13.html" class="sidebar-link">13. 通訊錄 手作 API 2</a></li><li><a href="/vuepress-blog/alex/day14.html" class="sidebar-link">14. 其他</a></li><li><a href="/vuepress-blog/alex/day15.html" class="sidebar-link">15. Vue-cli 與 Node.js</a></li><li><a href="/vuepress-blog/alex/day16.html" aria-current="page" class="active sidebar-link">16. 單檔模組化</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#摘要" class="sidebar-link">摘要</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#component-檔案內容" class="sidebar-link">Component 檔案內容</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#component-與-app-vue-的關係" class="sidebar-link">Component 與 App.vue 的關係</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#建立單檔-component" class="sidebar-link">建立單檔 component</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#props-接收外部傳入資料" class="sidebar-link">props 接收外部傳入資料</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#建立模組化-component" class="sidebar-link">建立模組化 component</a></li><li class="sidebar-sub-header"><a href="/vuepress-blog/alex/day16.html#emit-將資料傳送到外部" class="sidebar-link">$emit 將資料傳送到外部</a></li></ul></li><li><a href="/vuepress-blog/alex/day17.html" class="sidebar-link">17. 百頁路由</a></li><li><a href="/vuepress-blog/alex/day18.html" class="sidebar-link">18. 巢狀路由</a></li><li><a href="/vuepress-blog/alex/day19.html" class="sidebar-link">19. 路由參數與監控</a></li><li><a href="/vuepress-blog/alex/day20.html" class="sidebar-link">20. 共享式集中數據管理</a></li><li><a href="/vuepress-blog/alex/day21.html" class="sidebar-link">21. 模組化數據</a></li><li><a href="/vuepress-blog/alex/day22.html" class="sidebar-link">22. 順序選擇與進程</a></li><li><a href="/vuepress-blog/alex/day23.html" class="sidebar-link">23. TodoList 路由模組</a></li><li><a href="/vuepress-blog/alex/day24.html" class="sidebar-link">24. TodoList 資料模組</a></li><li><a href="/vuepress-blog/alex/day25.html" class="sidebar-link">25. TodoList 頁面模組 1 - 新增</a></li><li><a href="/vuepress-blog/alex/day26.html" class="sidebar-link">26. TodoList 頁面模組 2 - 列表</a></li><li><a href="/vuepress-blog/alex/day27.html" class="sidebar-link">27. TodoList 頁面模組 3 - 修改</a></li><li><a href="/vuepress-blog/alex/day28.html" class="sidebar-link">28. VuePress</a></li><li><a href="/vuepress-blog/alex/day29.html" class="sidebar-link">29. Nuxt.js</a></li><li><a href="/vuepress-blog/alex/day30.html" class="sidebar-link">30. 其他資訊</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_16-單檔模組化"><a href="#_16-單檔模組化" class="header-anchor">#</a> 16. 單檔模組化</h1> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>模組化的目的，在於將不同的功能、不同的流程分開，以便未來好管理。</p></div> <h2 id="摘要"><a href="#摘要" class="header-anchor">#</a> 摘要</h2> <p>關於 Component：</p> <ul><li>也有人稱為組件、元件、模組。</li> <li>可以是按鈕、標題、輸入框...等網頁中所使用的物件。</li> <li>目的在於將不同的功能、不同的流程分開，以便未來好管理。</li> <li>包含了 HTML、CSS 和 JS。</li></ul> <p>使用 component 的方法：</p> <ol><li>建立檔案，寫一支 component 檔案。
+<ul><li>檔名首字要大寫。</li> <li>避免和 HTML 原有標籤相同。</li> <li>副檔名為 &quot;.vue&quot;。</li></ul></li> <li>撰寫內容，建立三大區塊。
+<ul><li><code>&lt;script&gt;</code> <ul><li>撰寫 JavaScript 程式碼。</li> <li>包含這個 componemt 名稱、管理要從父組件接收的資料，以及 <code>computed</code>、<code>methods</code> 等資料的處理。</li></ul></li> <li><code>&lt;template&gt;</code> <ul><li>撰寫 HTML 程式碼。</li></ul></li> <li><code>&lt;style&gt;</code> <ul><li>撰寫 CSS 程式碼。</li> <li>可使用 <code>scoped</code> 屬性限制這些 CSS 只能用於此 componemt。</li> <li>選擇器建議使用 <code>id</code> 或 <code>class</code> 而非 HTML 標籤，以免效能變差。</li></ul></li></ul></li> <li>到 App.vue 載入並掛載組件
+<ul><li>將這個 component 用 <code>import</code> 匯入進來。</li> <li>把 component 掛載到 Vue 的 <code>components</code> 屬性。</li></ul></li> <li>在 HTML 加入組件的自定義標籤
+<ul><li>把 component 的自定義組件標籤放到 App.vue 的 <code>&lt;template&gt;</code> 中適當的位置。</li></ul></li> <li>透過 <code>props</code> 可將資料從外部的父組件 (例如 App.vue) 傳遞到內部的子組件。
+<ul><li>方式一：資料放在 component 的自訂標籤。</li> <li>方式二：資料放在 <code>data</code>，綁定到 component 的自訂標籤。</li></ul></li> <li>透過 <code>computed</code> 屬性，使用 <code>set</code> 和 <code>$emit</code> ，可將子組件的值更新到父組件。
+<ul><li>方式一：子組件用 <code>$emit(&quot;事件&quot;, 值)</code> ，父組件在標籤上綁定事件，再用 <code>methods</code> 進行處理。</li> <li>方式二：子組件用 <code>$emit(&quot;update:變數&quot;, 值)</code> ，父組件在標籤上綁定的變數後方加上 <code>.sync</code> 來讓更新同步。</li></ul></li></ol> <h2 id="component-檔案內容"><a href="#component-檔案內容" class="header-anchor">#</a> Component 檔案內容</h2> <p><img src="https://i.imgur.com/Jx4bfy3.png" alt="Vue CLI 檔案架構和畫面"></p> <p>使用 Vue CLI 建立一個新的專案資料夾，例如： component-test。</p> <div class="language-bash extra-class"><pre class="language-bash"><code>vue create component-test
+</code></pre></div><p>打開裡面的 &quot;App.vue&quot; 或 &quot;HelloWorld.vue&quot; 等副檔名為 &quot;vue&quot; 的檔案，這些都是用於這個專案的 component，裡面包含三大部分：</p> <ul><li>template → HTML</li> <li>script → JavaScript</li> <li>style → CSS</li></ul> <p>以 &quot;HelloWorld.vue&quot; 為例：</p> <h3 id="template"><a href="#template" class="header-anchor">#</a> template</h3> <p>用於撰寫這個 component 所需要的 HTML 程式碼。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- HelloWorld.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>hello<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">&gt;</span></span>{{ msg }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+    // 略...
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3 id="script"><a href="#script" class="header-anchor">#</a> script</h3> <p>負責 JavaScript 程式碼，包含：</p> <ul><li>使用 ES6 的 <code>export</code> 語法</li> <li>給予這個 componemt 名稱 (<code>name: 'HelloWorld'</code>)</li> <li>管理要從父組件接收的資料 (<code>props</code>)</li> <li>以及 <code>computed</code>、<code>methods</code> 的處理</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- HelloWorld.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'HelloWorld'</span><span class="token punctuation">,</span>  <span class="token comment">// 這個 componemt 的名稱</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>             <span class="token comment">// 管理資料從父組件傳遞到這個子組件的屬性</span>
+    <span class="token literal-property property">msg</span><span class="token operator">:</span> String        <span class="token comment">// 資料的名稱為 msg，型別為字串 (String)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h3 id="style"><a href="#style" class="header-anchor">#</a> style</h3> <p><code>&lt;style&gt;</code> 則為 CSS 程式碼撰寫的區域。可使用 <code>scoped</code> 屬性限制這些 CSS 只能用於此 componemt。</p> <p>如果 CSS 選擇器使用像下方這些 HTML 的標籤 (h3, ul, ...)，效能較差。因此建議配合 HTML 標籤的 <code>id</code> 或 <code>class</code> 來使用。</p> <div class="language-css extra-class"><pre class="language-css"><code>//- HelloWorld.vue
+<span class="token comment">/* 使用 scope 屬性，限制樣式影響的範圍 */</span>
+<span class="token selector">&lt;style scoped&gt;
+h3</span> <span class="token punctuation">{</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> 40px 0 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">ul</span> <span class="token punctuation">{</span>
+  <span class="token property">list-style-type</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
+  <span class="token property">padding</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">li</span> <span class="token punctuation">{</span>
+  <span class="token property">display</span><span class="token punctuation">:</span> inline-block<span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span> 0 10px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">a</span> <span class="token punctuation">{</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> #42b983<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+&lt;/style&gt;
+</code></pre></div><h2 id="component-與-app-vue-的關係"><a href="#component-與-app-vue-的關係" class="header-anchor">#</a> Component 與 App.vue 的關係</h2> <p>&quot;App.vue&quot; 是主要 component ，也是其他 component 最後匯集的地方。</p> <p>當我們寫好 component 時，需要到 &quot;App.vue&quot; 進行這些動作：</p> <ol><li>載入 component：用 <code>import</code> 載入進來。</li> <li>掛載 component：將載入的 component 掛載到 Vue 的 <code>components</code> 屬性。</li></ol> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- App.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token comment">// 將 component 用 import 載入進來</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">'./components/HelloWorld.vue'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'App'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    HelloWorld     <span class="token comment">// 掛載 component</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><p>然後，就可以用 <code>&lt;component&gt;&lt;/component&gt;</code> 或者 <code>&lt;component /&gt;</code> 格式的自定義組件標籤，來將組件放到 HTML 主頁中。(裡面的 <code>component</code> 字樣可替換成自定義的組件標籤名稱。)</p> <p>要傳到子組件的資料 (例如 <code>msg</code>) 也會被放在子組件所屬的自定義標籤裡。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- App.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span><span class="token punctuation">/&gt;</span></span>    // 自定義組件標籤
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>以下則是用於 <code>#app</code> 的 CSS 樣式。</p> <div class="language-css extra-class"><pre class="language-css"><code><span class="token selector">//- App.vue
+&lt;style&gt;
+#app</span> <span class="token punctuation">{</span>
+  <span class="token property">font-family</span><span class="token punctuation">:</span> Avenir<span class="token punctuation">,</span> Helvetica<span class="token punctuation">,</span> Arial<span class="token punctuation">,</span> sans-serif<span class="token punctuation">;</span>
+  <span class="token property">-webkit-font-smoothing</span><span class="token punctuation">:</span> antialiased<span class="token punctuation">;</span>
+  <span class="token property">-moz-osx-font-smoothing</span><span class="token punctuation">:</span> grayscale<span class="token punctuation">;</span>
+  <span class="token property">text-align</span><span class="token punctuation">:</span> center<span class="token punctuation">;</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> #2c3e50<span class="token punctuation">;</span>
+  <span class="token property">margin-top</span><span class="token punctuation">:</span> 60px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+&lt;/style&gt;
+</code></pre></div><h2 id="建立單檔-component"><a href="#建立單檔-component" class="header-anchor">#</a> 建立單檔 component</h2> <p>像 &quot;HelloWorld.vue&quot; 這樣把 HTML、CSS、JavaScript 這三大部分都寫在同一個檔案裡，就是單檔 component。</p> <p>以下新增一個標題模組 (TitleComponent.vue)：</p> <p><img src="https://i.imgur.com/oYcuj3P.png" alt="TitleComponent.vue"></p> <h3 id="_1-建立新檔"><a href="#_1-建立新檔" class="header-anchor">#</a> 1. 建立新檔</h3> <p>檔名為 &quot;TitleComponent.vue&quot;，需注意：</p> <ul><li>檔名首字要大寫。</li> <li>避免和 HTML 原有標籤相同。</li> <li>副檔名為 &quot;.vue&quot;。</li></ul> <h3 id="_2-撰寫內容"><a href="#_2-撰寫內容" class="header-anchor">#</a> 2. 撰寫內容</h3> <p>先在新檔中建立好 <code>&lt;script&gt;</code>、<code>&lt;template&gt;</code>、<code>&lt;style&gt;</code> 三大區塊。然後分別在這些區塊內撰寫 &quot;TitleComponent&quot; 這個標題組件的內容。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- TitleComponent.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>title<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>{{ title }}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;titleComponent&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 使用函式回傳 data 中的資料</span>
+  <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token string">&quot;This is title in TitleComponent&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span> <span class="token attr-name">scoped</span><span class="token punctuation">&gt;</span></span><span class="token style"><span class="token language-css">
+<span class="token selector">h1.title</span> <span class="token punctuation">{</span>
+  <span class="token property">color</span><span class="token punctuation">:</span> deeppink<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>:::info
+<strong>使用 data 函式回傳資料</strong>
+需要注意的是，如果在 component 本體會用到 <code>data</code>，要用函式 <code>return</code> 資料，而非用以往物件的形式來放資料。</p> <p>這是因為 component 可以重複被利用、分別使用不同的資料。使用物件會讓所有的 component 都使用同樣的資料。</p> <p>但以函式來回傳 <code>data</code> ，則每次註冊 component，就會回傳一個新的物件。
+:::</p> <h3 id="_3-到-app-vue-載入並掛載組件"><a href="#_3-到-app-vue-載入並掛載組件" class="header-anchor">#</a> 3. 到 App.vue 載入並掛載組件</h3> <p>將 &quot;TitleComponent&quot; 載入到 &quot;App.vue&quot;，並掛載到 Vue ，以使用這個組件。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- App.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">&quot;./components/HelloWorld.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> TitleComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/TitleComponent.vue&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;App&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    HelloWorld<span class="token punctuation">,</span>
+    TitleComponent
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h3 id="_4-在-html-加入組件的自定義標籤"><a href="#_4-在-html-加入組件的自定義標籤" class="header-anchor">#</a> 4. 在 HTML 加入組件的自定義標籤</h3> <p>把 component 的自定義標籤，像一般的 HTML 標籤一樣，放到 App.vue 的 <code>&lt;template&gt;</code> 中適當的位置。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- App.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TitleComponent</span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h3 id="_5-執行以觀看成果"><a href="#_5-執行以觀看成果" class="header-anchor">#</a> 5. 執行以觀看成果</h3> <p>終端機進入到專案資料夾，輸入 <code>npm run serve</code> 取得執行位置。將位置貼到瀏覽器開啟，就能看到執行結果。</p> <p><img src="https://i.imgur.com/KcSeceh.png" alt=""></p> <blockquote><p>如果沒有結束終端機的執行，則在檔案進行的任何變更，存檔後都會即時更新到瀏覽器畫面上。</p></blockquote> <h2 id="props-接收外部傳入資料"><a href="#props-接收外部傳入資料" class="header-anchor">#</a> props 接收外部傳入資料</h2> <h3 id="子組件-內組件"><a href="#子組件-內組件" class="header-anchor">#</a> 子組件 (內組件)</h3> <p>如果在網頁中有多個地方都會用到這個 component，但這些 component 的內容各不相同，顯示的資料希望由外部提供，則不會在 component 本身使用 <code>data</code> 屬性。</p> <p>為了接收外部傳進來的資料，我們會使用 <code>props</code> 屬性來管理外部資料。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- TitleComponent.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;titleComponent&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// data() {</span>
+  <span class="token comment">//   return {</span>
+  <span class="token comment">//     title: &quot;This is title in TitleComponent&quot;</span>
+  <span class="token comment">//   };</span>
+  <span class="token comment">// }</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>             <span class="token comment">// 管理外部傳入的資料</span>
+    <span class="token literal-property property">title</span><span class="token operator">:</span> <span class="token punctuation">{</span>           <span class="token comment">// 資料的名稱</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>    <span class="token comment">// 傳入的資料類型</span>
+      <span class="token literal-property property">required</span><span class="token operator">:</span> <span class="token boolean">true</span>   <span class="token comment">// 有資料才會顯示此組件</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><blockquote><p><strong>required 屬性</strong>
+在 &quot;HelloWorld.vue&quot; 裡面，資料為 <code>msg: String</code> ，只指定了資料的型別。
+在這個例子，則為資料 <code>title</code> ，多用了 <code>required</code> 屬性，表示有資料時，才會顯示這個 component。</p></blockquote> <h3 id="父組件-外組件"><a href="#父組件-外組件" class="header-anchor">#</a> 父組件 (外組件)</h3> <p>至於外部的父組件，則要給予資料。資料的呈現方式有兩種：</p> <ol><li>直接放在自定義標籤。例如： <code>&lt;HelloWorld msg=&quot;Welcome to Your Vue.js App&quot; /&gt;</code>。</li> <li>將資料放在 <code>data</code> 函式回傳，並綁定到所需的自定義標籤中的屬性。</li></ol> <p>HTML</p> <div class="language-html extra-class"><pre class="language-html"><code>//- App.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TitleComponent</span> <span class="token attr-name">:title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>           // 資料綁定到 title 屬性
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span> // 資料直接放在自定義標籤中
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>JS</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- App.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">&quot;./components/HelloWorld.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> TitleComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/TitleComponent.vue&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;App&quot;</span><span class="token punctuation">,</span>
+  <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>                                     <span class="token comment">// 用來回傳資料</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">titleText</span><span class="token operator">:</span> <span class="token string">&quot;This is title from App.vue&quot;</span>  <span class="token comment">// 要放到 title 的內容</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    HelloWorld<span class="token punctuation">,</span>
+    TitleComponent
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h2 id="建立模組化-component"><a href="#建立模組化-component" class="header-anchor">#</a> 建立模組化 component</h2> <p>除了建立單檔 component 之外，副檔名為 &quot;.vue&quot; 的組件檔案，也可以像平常撰寫時，將 HTML、CSS，以及 JavaScript 這三個部分拆成獨立的檔案，建立模組化 component。</p> <h3 id="_1-建立組件資料夾與檔案"><a href="#_1-建立組件資料夾與檔案" class="header-anchor">#</a> 1. 建立組件資料夾與檔案</h3> <p>在 &quot;components&quot; 資料夾底下建立一個新資料夾，名稱為新的組件名稱，規則與單檔建立名稱相同，例如：InputComponent。</p> <p>然後在此資料夾裡面建立以下三個檔案：</p> <ul><li>index.vue</li> <li>style.css</li> <li>template.html</li></ul> <div class="language- extra-class"><pre class="language-text"><code>src
+├─assets
+├─components
+│ ├─InputComponent      // 模組化 component
+│ │ ├─index.vue         // JavaScript，主要檔案
+│ │ ├─style.css         // CSS
+│ │ └─template.html     // HTML
+│ ├─HelloWorld.vue      // 單檔 component
+│ └─TitleComponent.vue  // 單檔 component
+└─App.vue
+</code></pre></div><h3 id="_2-將-html-和-css-匯入到此組件的-vue-檔案"><a href="#_2-將-html-和-css-匯入到此組件的-vue-檔案" class="header-anchor">#</a> 2. 將 HTML 和 CSS 匯入到此組件的 .vue 檔案</h3> <p>以往撰寫 HTML、CSS 和 JavaScript 檔案時，會將 CSS 和 JavaScript 檔案分別以 <code>&lt;link&gt;</code> 和 <code>&lt;script&gt;</code> 標籤匯入到主要的 HTML 檔案裡面。</p> <p>而在 Vue CLI ，則是將作用於同一個 component 的 &quot;template.html&quot; 和 &quot;style.css&quot; 的檔案路徑，分別用 <code>src</code> 屬性透過 <code>&lt;template&gt;</code> 和 <code>&lt;style&gt;</code> 標籤匯入到 &quot;index.vue&quot; 裡面。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- index.vue</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;inputComponent&quot;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+
+<span class="token comment">// 使用 src 匯入此組件的 template 和 style</span>
+<span class="token operator">&lt;</span>template src<span class="token operator">=</span><span class="token string">&quot;./template.html&quot;</span><span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span>style src<span class="token operator">=</span><span class="token string">&quot;./style.css&quot;</span> scoped<span class="token operator">&gt;</span><span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">&gt;</span>
+</code></pre></div><p>如此一來，就能專心在個別檔案寫程式。</p> <h3 id="_3-撰寫程式"><a href="#_3-撰寫程式" class="header-anchor">#</a> 3. 撰寫程式</h3> <p>假如我們要在 <code>input</code> 欄位裡面預設顯示 &quot;TitleComponent.vue&quot; 組件用到的資料 <code>titleText</code>。</p> <p>HTML 部分，在 <code>input</code> 標籤使用 <code>v-model</code> 並綁定新的變數 <code>text</code> 來連接資料。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- InputComponent/template.html
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text<span class="token punctuation">&quot;</span></span> <span class="token attr-name">v-model</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+</code></pre></div><p>由於要使用 <code>text</code> 接收 <code>titleText</code> ，而 <code>titleText</code> 又是從 &quot;App.vue&quot; 傳入的資料，所以需要用 <code>props</code> 來管理 <code>text</code>。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- InputComponent/index.vue</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;inputComponent&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+      <span class="token literal-property property">required</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h3 id="_4-到-app-vue-載入並掛載組件"><a href="#_4-到-app-vue-載入並掛載組件" class="header-anchor">#</a> 4. 到 App.vue 載入並掛載組件</h3> <p>同樣地，我們要將這個 component 載入到 &quot;App.vue&quot; ，才能夠顯示到畫面上。</p> <p>之前的 component 只有單檔，所以匯入檔案就等於匯入組件。但現在 &quot;InputComponent&quot; 被模組化，所以我們要傳入 &quot;InputComponent&quot; 資料夾底下主要的 &quot;index.vue&quot; 來匯入這個 component。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- App.vue</span>
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">&quot;./components/HelloWorld.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> TitleComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/TitleComponent.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> InputComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/InputComponent/index.vue&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;App&quot;</span><span class="token punctuation">,</span>
+  <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">titleText</span><span class="token operator">:</span> <span class="token string">&quot;This is title from App.vue&quot;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    HelloWorld<span class="token punctuation">,</span>
+    TitleComponent<span class="token punctuation">,</span>
+    InputComponent
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><p>匯入之後，將這個 component 放到畫面，並且綁定資料。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- App.vue
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TitleComponent</span> <span class="token attr-name">:title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>InputComponent</span> <span class="token attr-name">:text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>             // 放上畫面並綁定資料
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>如此一來，就能在畫面上看到多了一個輸入框，並且裡面已填好 <code>titleText</code> 的內容。</p> <p><img src="https://i.imgur.com/MoJ3xcQ.png" alt=""></p> <h2 id="emit-將資料傳送到外部"><a href="#emit-將資料傳送到外部" class="header-anchor">#</a> $emit 將資料傳送到外部</h2> <p><code>v-model</code> 可以讓資料與畫面雙向互動，如果我們希望修改 <code>input</code> 的內容時，上面的 <code>titleText</code> 標題的內容也能跟著改變，則需要透過 <code>$emit</code> 來進行資料的傳遞。</p> <p>這是因為 <code>titleText</code> 是屬於外組件 &quot;App.vue&quot; 的資料，而不是 &quot;InputComponent&quot; 本身的資料，因此不被允許跨組件任意改動。</p> <p>這裡我們建立一個新的變數 <code>inputText</code> 以和原有變數 <code>text</code> 區別，並透過 <code>computed</code> 去跟原本的 <code>text</code> 進行連動。也因此，HTML 這裡，<code>input</code> 改成跟資料 <code>inputText</code> 連結。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- InputComponent/template.html
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>text<span class="token punctuation">&quot;</span></span> <span class="token attr-name">v-model</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>inputText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+</code></pre></div><p>由於 <code>inputText</code> 要「取值」 (從 &quot;App.vue&quot; 取得 <code>titleText</code> 的內容) 以及「給值」 (當 <code>input</code> 的內容被改變時，新的值要被賦予 &quot;App.vue&quot; 的 <code>titleText</code>)。所以 <code>inputText</code> 用物件而非函式的形式，使用 <code>get(){}</code> 和 <code>set(){}</code> 來實現「取值」以及「給值」這兩件事。</p> <h3 id="方法一-傳入事件、新值作為參數"><a href="#方法一-傳入事件、新值作為參數" class="header-anchor">#</a> 方法一：傳入事件、新值作為參數</h3> <h4 id="inputcomponent"><a href="#inputcomponent" class="header-anchor">#</a> InputComponent</h4> <p>使用 <code>$emit</code> 有兩種方法。第一個方法是傳入事件、新值作為參數。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- InputComponent/index.vue</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;inputComponent&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+      <span class="token literal-property property">required</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">inputText</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 取值：回傳 text 的值 (來自 App.vue 的 titleText 變數)</span>
+      <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>text<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment">// 賦值：當 textChange 事件發生時，將新值 val 給父組件</span>
+      <span class="token function">set</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">&quot;textChange&quot;</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h4 id="app-vue"><a href="#app-vue" class="header-anchor">#</a> App.vue</h4> <p><code>textChange</code> 這個事件會發生在 &quot;InputComponent&quot; 這個組件的內容改變時，並且觸發 &quot;App.vue&quot; 的事件處理器 <code>changeHandler</code>。</p> <div class="language-html extra-class"><pre class="language-html"><code>//- App.vue
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TitleComponent</span> <span class="token attr-name">:title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>InputComponent</span> <span class="token attr-name">:text</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token attr-name">@textChange</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>changeHandler<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>  // 綁定事件
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>要處理事件，一樣用 <code>methods</code> 來將改變後的新值，賦予 <code>titleText</code>，使得讀取到 <code>titleText</code> 的 <code>TitleComponent</code> 標題內容也跟著改變。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">//- App.vue</span>
+
+<span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">import</span> HelloWorld <span class="token keyword">from</span> <span class="token string">&quot;./components/HelloWorld.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> TitleComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/TitleComponent.vue&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> InputComponent <span class="token keyword">from</span> <span class="token string">&quot;./components/InputComponent/index.vue&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;App&quot;</span><span class="token punctuation">,</span>
+  <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">titleText</span><span class="token operator">:</span> &quot;This is title from App<span class="token punctuation">.</span>vueText
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">components</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    HelloWorld<span class="token punctuation">,</span>
+    TitleComponent<span class="token punctuation">,</span>
+    InputComponent
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// 使用 methods 來處理事件，改變 titleText 的值</span>
+  <span class="token literal-property property">methods</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token function">changeHandler</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>titleText <span class="token operator">=</span> val<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><p><img src="https://i.imgur.com/tw6ueNX.png" alt=""></p> <h3 id="方法二-使用-update-和-sync"><a href="#方法二-使用-update-和-sync" class="header-anchor">#</a> 方法二：使用 update 和 sync</h3> <h4 id="inputcomponent-2"><a href="#inputcomponent-2" class="header-anchor">#</a> InputComponent</h4> <p>使用 <code>$emit</code> 還有另一個更簡潔的寫法來傳值。第一個參數使用 <code>update:變數名稱</code>。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token operator">&lt;</span>script<span class="token operator">&gt;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">&quot;inputComponent&quot;</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">props</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">type</span><span class="token operator">:</span> String<span class="token punctuation">,</span>
+      <span class="token literal-property property">required</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">inputText</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>text<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token function">set</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">&quot;update:text&quot;</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">&gt;</span>
+</code></pre></div><h4 id="app-vue-2"><a href="#app-vue-2" class="header-anchor">#</a> App.vue</h4> <p>然後在 &quot;App.vue&quot; 的 <code>template</code> 裡面，將那個要被改值的變數後面加上 <code>.sync</code>。</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TitleComponent</span> <span class="token attr-name">:title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">alt</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Vue logo<span class="token punctuation">&quot;</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>./assets/logo.png<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>InputComponent</span> <span class="token attr-name">:text.sync</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>titleText<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>        // 變數 text 後面加上 .sync
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>HelloWorld</span> <span class="token attr-name">msg</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Welcome to Your Vue.js App<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><p>這樣一來，事件跟處理器都不用寫，當內部的值更新時，就能將值從內部傳到外部同步改寫。只不過，除了改值以外，這個方法無法對變數進行其他動作。</p> <p><img src="https://i.imgur.com/Y9biYnm.png" alt=""></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vuepress-blog/alex/day15.html" class="prev">
+        15. Vue-cli 與 Node.js
+      </a></span> <span class="next"><a href="/vuepress-blog/alex/day17.html">
+        17. 百頁路由
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/vuepress-blog/assets/js/app.e552d1dc.js" defer></script><script src="/vuepress-blog/assets/js/2.b5968420.js" defer></script><script src="/vuepress-blog/assets/js/24.3b40ec03.js" defer></script>
+  </body>
+</html>
